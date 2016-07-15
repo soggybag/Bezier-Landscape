@@ -9,6 +9,9 @@
 import SpriteKit
 
 class GameScene: SKScene {
+    var ball: SKShapeNode!
+    var ballRolling = false
+    
     var landscapes = [SKShapeNode]()
     var landscapeWidth: CGFloat!
     var leftLimit: CGFloat!
@@ -25,6 +28,7 @@ class GameScene: SKScene {
     
     func scrollLandscapes(deltaTime: CFTimeInterval) {
         for landscape in landscapes {
+            // Use
             landscape.position.x -= 20 * CGFloat(deltaTime)
             if landscape.position.x < leftLimit {
                 // Recycle this landscape and draw a new contour
@@ -52,7 +56,7 @@ class GameScene: SKScene {
             let c1 = CGPoint(x: x + stepXhalf, y: y)
             // Set the x and y for the new point
             x = CGFloat(i) * stepX
-            y = CGFloat(arc4random() % 200) - 100 + centerY
+            y = CGFloat(arc4random() % 100) - 100 + centerY
             let p = CGPoint(x: x, y: y)
             // Set control point 2
             let c2 = CGPoint(x: x - stepXhalf, y: y)
@@ -67,15 +71,25 @@ class GameScene: SKScene {
         // Set the path stroke and fill
         landscape.path = path.CGPath
         let hue = CGFloat(arc4random() % 100) / 100
-        landscape.strokeColor = UIColor(hue: hue, saturation: 1, brightness: 1, alpha: 1)
-        landscape.lineWidth = 4
+        landscape.strokeColor = UIColor(hue: hue, saturation: 1, brightness: 0.5, alpha: 1)
+        landscape.lineWidth = 8
         // landscape.fillColor = UIColor(hue: hue, saturation: 1, brightness: 1, alpha: 1)
+        
+        landscape.physicsBody = SKPhysicsBody(edgeChainFromPath: path.CGPath)
+        landscape.physicsBody?.dynamic = false
     }
     
     
 
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
+        let ballSize = CGSize(width: 30, height: 30)
+        ball = SKShapeNode(ellipseOfSize: ballSize)
+        ball.fillColor = UIColor(white: 1, alpha: 0.3)
+        ball.physicsBody = SKPhysicsBody(circleOfRadius: 15)
+        ball.position.x = view.frame.width / 2
+        ball.position.y = view.frame.height - 100
+        addChild(ball)
         
         // Get some numbers we need to draw stuff
         centerY = view.frame.height / 2
@@ -100,8 +114,13 @@ class GameScene: SKScene {
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-       /* Called when a touch begins */
-        
+        /* Called when a touch begins */
+        // let touch = touches.first
+        ballRolling = true
+    }
+    
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        ballRolling = false
     }
    
     override func update(currentTime: CFTimeInterval) {
@@ -113,5 +132,12 @@ class GameScene: SKScene {
             lastUpdateTimeInterval = currentTime
         }
         scrollLandscapes(timeSinceLast)
+        
+        if ballRolling {
+            ball.physicsBody?.applyTorque(-2000)
+            ball.physicsBody?.applyForce(CGVector(dx: 50, dy: 0))
+            // print(ball.physicsBody?.angularVelocity)
+        }
+        
     }
 }
