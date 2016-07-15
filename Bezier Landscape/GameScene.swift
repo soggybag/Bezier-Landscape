@@ -20,10 +20,12 @@ class GameScene: SKScene {
     var steps: Int = 10
     var lastLandscapeY: CGFloat = 0
     
+    var lastUpdateTimeInterval: CFTimeInterval = 0
     
-    func scrollLandscapes() {
+    
+    func scrollLandscapes(deltaTime: CFTimeInterval) {
         for landscape in landscapes {
-            landscape.position.x -= 2
+            landscape.position.x -= 20 * CGFloat(deltaTime)
             if landscape.position.x < leftLimit {
                 // Recycle this landscape and draw a new contour
                 landscape.position.x += landscapeRight
@@ -37,7 +39,8 @@ class GameScene: SKScene {
     func drawBezierLandscape(landscape: SKShapeNode) {
         // Create a path. *** I used init(rect) here to draw a box around the landscape for debugging
         // Replace UIbezier(rect:) with UIBezier() to get rid of the rectangle.
-        let path = UIBezierPath(rect: view!.frame)
+        // let path = UIBezierPath(rect: view!.frame)
+        let path = UIBezierPath()
         // set the starting x and y
         var x: CGFloat = 0
         var y: CGFloat = lastLandscapeY
@@ -103,6 +106,12 @@ class GameScene: SKScene {
    
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
-        scrollLandscapes()
+        var timeSinceLast: CFTimeInterval = currentTime - lastUpdateTimeInterval
+        lastUpdateTimeInterval = currentTime
+        if timeSinceLast > 1 {
+            timeSinceLast = 1.0 / 60.0
+            lastUpdateTimeInterval = currentTime
+        }
+        scrollLandscapes(timeSinceLast)
     }
 }
