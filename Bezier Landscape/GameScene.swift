@@ -26,9 +26,9 @@ class GameScene: SKScene {
     // Set the number of curves drawn into each section
     var steps: Int = 80
     // Set the amount of
-    var slopeRange: UInt32 = 140
-    var slopeMinChange: CGFloat = 20
-    var slopeRangeCenter: CGFloat = 40
+    var slopeRange: UInt32 = 160
+    var slopeMinChange: CGFloat = 40
+    var slopeRangeCenter: CGFloat = 80
     
     var lastLandscapeY: CGFloat = 0
     
@@ -163,13 +163,13 @@ class GameScene: SKScene {
         }
         // scrollLandscapes(timeSinceLast)
         
-        /*
+        
         if ballRolling {
-            ball.physicsBody?.applyTorque(-2000)
+            // ball.physicsBody?.applyTorque(-1000)
             ball.physicsBody?.applyForce(CGVector(dx: 50, dy: 0))
             // print(ball.physicsBody?.angularVelocity)
         }
-        */
+ 
         
         cameraNode.position = ball.position
         
