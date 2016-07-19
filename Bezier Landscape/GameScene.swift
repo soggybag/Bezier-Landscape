@@ -88,6 +88,7 @@ class GameScene: SKScene {
         
         landscape.physicsBody = SKPhysicsBody(edgeChainFromPath: path.CGPath)
         landscape.physicsBody?.dynamic = false
+        landscape.physicsBody?.friction = 0
     }
     
     
@@ -103,7 +104,11 @@ class GameScene: SKScene {
         ball = SKShapeNode(ellipseOfSize: ballSize)
         ball.fillColor = UIColor(white: 1, alpha: 0.3)
         ball.physicsBody = SKPhysicsBody(circleOfRadius: 15)
-        ball.physicsBody?.linearDamping = 0.8
+        
+        // ball.physicsBody?.linearDamping = 0.8
+        ball.physicsBody?.friction = 0
+        ball.physicsBody?.allowsRotation = false
+        
         ball.position.x = view.frame.width / 2
         ball.position.y = view.frame.height - 100
         addChild(ball)
@@ -166,7 +171,7 @@ class GameScene: SKScene {
         
         if ballRolling {
             // ball.physicsBody?.applyTorque(-1000)
-            ball.physicsBody?.applyForce(CGVector(dx: 50, dy: 0))
+            ball.physicsBody?.applyForce(CGVector(dx: 15, dy: -21))
             // print(ball.physicsBody?.angularVelocity)
         }
  
