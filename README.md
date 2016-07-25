@@ -8,7 +8,9 @@ A camera node follows the ball as it rolls down the hill, while landscape sectio
 moves out of the camera's view on the left it is moved to the right side and a new landscape contour is created. 
 
 The width of each landscape section is set by *sectionWidth*. The current example sets this to 10000 points. Landscape 
-contours are drawn using addCurveToPoint(). The physics body uses a UIBezier path as an edge chain. The number of 
+contours are drawn using addCurveToPoint(), see the notes below for more info on this. 
+
+The physics body uses a UIBezier path as an edge chain. The number of 
 curves in a section is set by *steps*, the current example uses 80. 
 
 *NOTE!*:
@@ -19,5 +21,9 @@ Causes a memory leak! While using this for testing you may see an increasing use
 should drop to reasonable levels.  
 
 ![Screenshot](screenshot.png)
+
+This images gives an idea of how addCurveToPoint() is used in this example. Points are spaced evenly on the X. On the Y the value is set to a random value. The control points are set to Y of their attached point, and the X value is set to mid point betwen the current point and the previous point. 
+
+![Screenshot](Sloping Landscape.png)
 
  
