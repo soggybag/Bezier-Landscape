@@ -166,17 +166,42 @@ class GameScene: SKScene {
             timeSinceLast = 1.0 / 60.0
             lastUpdateTimeInterval = currentTime
         }
+        
         // scrollLandscapes(timeSinceLast)
         
         
         if ballRolling {
             // ball.physicsBody?.applyTorque(-1000)
-            ball.physicsBody?.applyForce(CGVector(dx: 15, dy: -21))
+            ball.physicsBody?.applyForce(CGVector(dx: 35, dy: -21))
             // print(ball.physicsBody?.angularVelocity)
         }
  
         
         cameraNode.position = ball.position
         
+        scrollLandscapeNodes()
+        
     }
 }
+
+
+extension GameScene {
+    
+    func scrollLandscapeNodes() {
+        for landscape in landscapes {
+            let x = landscape.position.x - cameraNode.position.x
+            if x < -(landscapeWidth + view!.frame.width / 2) {
+                landscape.position.x += landscapeWidth * 2
+                drawBezierLandscape(landscape)
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
