@@ -11,6 +11,6 @@ The width of each landscape section is set by *sectionWidth*. The current exampl
 contours are drawn using addCurveToPoint(). The physics body uses a UIBezier path as an edge chain. The number of 
 curves in a section is set by *steps*, the current example uses 80. 
 
-![Screenshot]()
+![Screenshot](screenshot.png)
 
  
