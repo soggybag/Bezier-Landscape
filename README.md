@@ -18,7 +18,10 @@ curves in a section is set by *steps*, the current example uses 80.
     skView.showsPhysics = true
 
 Causes a memory leak! While using this for testing you may see an increasing use of memory. Turn this off and memory useage
-should drop to reasonable levels.  
+should drop to reasonable levels. 
+
+![screenshot](screenshot.gif)
+
 
 ![Screenshot](screenshot.png)
 
